@@ -1,0 +1,16 @@
+<mvc:View
+  controllerName="tarefas.front.controller.Main"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns="sap.m"
+  xmlns:core="sap.ui.core">
+
+  <Page
+    id="mainPage"
+    title="Gerenciador de Tarefas"
+    showNavButton="false"
+    showHeader="true"
+	  class="customPageBackground">
+
+    <VBox id="contentVBox" />
+  </Page>
+</mvc:View>

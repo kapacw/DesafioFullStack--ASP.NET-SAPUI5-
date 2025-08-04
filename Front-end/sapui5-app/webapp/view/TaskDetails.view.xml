@@ -1,0 +1,49 @@
+<mvc:View
+  controllerName="tarefas.front.controller.TaskDetails"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+  viewName="tarefas.front.view.TaskDetails"
+  height="100%"
+  displayBlock="true"
+  models="{ TaskDetailsModel: 'TaskDetailsModel' }">
+
+  <VBox alignItems="Center" justifyContent="Center" width="100%" height="100%">
+    
+    <!-- Card visual diferenciado -->
+    <VBox class="task-details-card" width="420px" alignItems="Stretch">
+      
+      <Title text="📋 Detalhes da Tarefa" level="H2" class="sapUiMediumMarginBottom" />
+
+      <HBox class="task-detail-line">
+        <Label text="ID:" width="100px" />
+        <Text text="{TaskDetailsModel>/id}" />
+      </HBox>
+
+      <HBox class="task-detail-line">
+        <Label text="Título:" width="100px" />
+        <Text text="{TaskDetailsModel>/title}" />
+      </HBox>
+
+      <HBox class="task-detail-line">
+        <Label text="Status:" width="100px" />
+        <HBox alignItems="Center">
+          <HBox alignItems="Center" class="{= ${TaskDetailsModel>completed} ? 'status-sim' : 'status-nao' }">
+            <Text text="{= ${TaskDetailsModel>/completed} ? 'Completo' : 'Incompleto' }" />
+          </HBox>
+        </HBox>
+      </HBox>
+
+      <HBox class="task-detail-line">
+        <Label text="Usuário ID:" width="100px" />
+        <Text text="{TaskDetailsModel>/userId}" />
+      </HBox>
+
+      <!-- Botão centralizado horizontalmente -->
+      <HBox justifyContent="Center" class="sapUiMediumMarginTop">
+        <Button text="Voltar" icon="sap-icon://nav-back" press="onVoltar" />
+      </HBox>
+
+    </VBox>
+  </VBox>
+</mvc:View>

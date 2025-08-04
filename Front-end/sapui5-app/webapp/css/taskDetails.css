@@ -1,0 +1,11 @@
+.task-details-card {
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(245, 245, 245, 0.1);
+  margin-top: 4rem;
+}
+
+.task-detail-line {
+  margin-bottom: 1rem;
+}

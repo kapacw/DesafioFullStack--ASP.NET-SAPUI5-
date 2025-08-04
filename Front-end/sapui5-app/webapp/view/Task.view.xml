@@ -1,0 +1,143 @@
+<mvc:View
+  controllerName="tarefas.front.controller.Task"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns="sap.m"
+  xmlns:core="sap.ui.core">
+
+  <VBox class="taskPage sapUiSmallMargin" width="97%">
+
+    <!-- Filtros -->
+    <HBox class="filter-bar" alignItems="Center" justifyContent="SpaceBetween" width="100%">
+      <!-- Campo de busca ocupando 60% -->
+      <HBox width="100%">
+        <Input
+          id="searchField"
+          width="100%"
+          placeholder="Buscar por título..."
+          liveChange="onSearchLiveChange"
+          class="custom-input" />
+      </HBox>
+
+      <!-- Botões à direita com gap -->
+      <HBox width="40%" class="filter-buttons" justifyContent="End" alignItems="Center">
+        <Select
+          id="pageSizeSelect"
+          width="130px"
+          change="onPageSizeChange"
+          class="custom-select">
+          <items>
+            <core:Item key="10" text="10" />
+            <core:Item key="20" text="20" />
+            <core:Item key="50" text="50" />
+            <core:Item key="100" text="100" />
+            <core:Item key="-1" text="Todos" />
+          </items>
+        </Select>
+
+        <Select
+          id="sortSelect"
+          width="130px"
+          change="onSortChange"
+          class="custom-select">
+          <items>
+            <core:Item key="title" text="Título" />
+            <core:Item key="id" text="ID" />
+          </items>
+        </Select>
+
+        <Button
+          icon="{= ${TarefaModel>/order} === 'asc' ? 'sap-icon://slim-arrow-up' : 'sap-icon://slim-arrow-down' }"
+          tooltip="{= ${TarefaModel>/order} === 'asc' ? 'Ordenar Decrescente' : 'Ordenar Crescente' }"
+          press="onToggleOrder"
+          type="Transparent" />
+
+        <Button
+          text="Sincronizar Banco"
+          press="onSyncBanco"
+          icon="sap-icon://refresh"
+          type="Emphasized"
+          class="sapUiTinyMarginBegin" />
+      </HBox>
+    </HBox>
+
+    <!-- Tabela de Tarefas -->
+    <Table
+      items="{TarefaModel>/items}"
+      id="taskTable"
+      class="task-table sapUiSmallMargin"
+      width="100%">
+      <columns>
+        <Column width="50%" hAlign="Center">
+          <Text text="Título" textAlign="Center" />
+        </Column>
+        <Column width="25%" hAlign="Center">
+          <Text text="Status de Conclusão" textAlign="Center" />
+        </Column>
+        <Column width="15%" hAlign="Center">
+          <Text text="ID de Usuário" textAlign="Center" />
+        </Column>
+        <Column width="10%" hAlign="End">
+          <Text text="Detalhes" textAlign="End" />
+        </Column>
+      </columns>
+      <items>
+        <ColumnListItem
+          type="Inactive"
+          class="{= ${TarefaModel>completed} ? 'task-row-completa' : 'task-row-incompleta' }">
+          <cells>
+            <Text
+              text="{TarefaModel>title}"
+              class="{= ${TarefaModel>completed} ? 'linha-concluida-texto' : '' }" />
+
+            <HBox alignItems="Center" justifyContent="Center">
+              <HBox
+                alignItems="Center"
+                class="{= ${TarefaModel>completed} ? 'status-sim' : 'status-nao' }">
+                <Text text="{= ${TarefaModel>completed} ? 'Sim' : 'Não' }" />
+              </HBox>
+
+              <Switch
+                state="{TarefaModel>completed}"
+                change="onToggleStatus"
+                class="{= ${TarefaModel>completed} ? 'switch-verde' : 'switch-vermelho' }">
+                <customData>
+                  <core:CustomData key="id" value="{TarefaModel>id}" />
+                </customData>
+              </Switch>
+            </HBox>
+
+            <Text text="{TarefaModel>userId}" />
+            <Button icon="sap-icon://add" tooltip="Detalhes" press="onDetalhes" />
+          </cells>
+        </ColumnListItem>
+      </items>
+    </Table>
+
+    <!-- Paginação -->
+    <HBox
+      visible="{= ${TarefaModel>/totalPages} &gt; 1 }"
+      alignItems="Center"
+      justifyContent="Center"
+      class="sapUiSmallMarginTop">
+
+      <!-- Botão Anterior -->
+      <Button
+        icon="sap-icon://slim-arrow-left"
+        tooltip="Página Anterior"
+        press="onPageAnterior"
+        visible="{= ${TarefaModel>/page} &gt; 1 }" />
+
+      <!-- Texto da página atual -->
+      <Text
+        class="sapUiTinyMargin sapUiMediumMarginBegin sapUiMediumMarginEnd"
+        text="{= 'Página ' + ${TarefaModel>/page} + ' de ' + ${TarefaModel>/totalPages} }" />
+
+      <!-- Botão Próxima -->
+      <Button
+        icon="sap-icon://slim-arrow-right"
+        tooltip="Próxima Página"
+        press="onPageProxima"
+        visible="{= ${TarefaModel>/page} &lt; ${TarefaModel>/totalPages} }" />
+    </HBox>
+  </VBox>
+</mvc:View>
